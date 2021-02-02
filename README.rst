@@ -183,10 +183,17 @@ If we're only interested in a subset of all columns, we can specify a comma-sepe
 
 .. code:: shell
 
-    $ meticulous experiments/
-                                     curexpdir           begin_time   status status_message
-    (, sha)              expid
-    970d8ad001f5d42a9... 1      experiments/1/  2020-11-02T12:48...  SUCCESS
+    $ meticulous /mnt/home/unsupervised_fact/results \
+        --filter args_xval_strategy==xval \
+        --groupby args_k,args_method,args_n_estimators \
+        --columns summary_significance_mean,summary_significance_std \
+        --sort summary_significance_mean \
+        --export table.md
+                                      summary_significance_mean  summary_significance_std
+args_k args_method args_n_estimators                                                                 
+32     KMeans      1                              19.5634                           0.6418           
+16     KMeans      1                              18.2383                           0.8171           
+8      KMeans      1                              15.1532                           0.6727¨
 
 We can also export the summary in a number of different formats by specifying the ``--export {filename}`` argument. Depending on the ending of filename, we either export a pandas dataframe (``*.pd``), a csv table (``*.csv``), a json (``*.json``), a markdown table (``*.md``) or a LaTeX table (``*.tex``). 
 
