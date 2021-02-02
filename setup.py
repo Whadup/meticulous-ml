@@ -22,7 +22,7 @@ Complete documentation is hosted at ashwinparanjape.github.io/meticulous-ml/.
 """
 setuptools.setup(
         name = "meticulous",
-        version = "0.0.1",
+        version = "0.0.2",
         author = "Ashwin Paranjape",
         author_email = "ashwing.2005@gmail.com",
         description = "Lightweight experiment tracking for Machine Learning",
