@@ -59,7 +59,7 @@ if __name__ == '__main__':
     final_df = pd.concat(dfs, axis=1)
     
     final_df = final_df.reset_index().set_index([('', 'sha'), 'expid'])
-    final_df.columns = ['_'.join(col).strip() for col in final_df.columns.values]
+    final_df.columns = ['_'.join([x for x in col if x is not ""]).strip() for col in final_df.columns.values]
     if args.filter:
         try:
             final_df = final_df.query(args.filter)
@@ -71,7 +71,7 @@ if __name__ == '__main__':
             by = [x.strip() for x in args.groupby.split(",")]
             final_df = final_df.groupby(by=by, dropna=False, group_keys=False, as_index=False) \
                         .agg({k : [np.mean, np.std] if np.issubdtype(final_df.dtypes[k], np.float) else np.size for k in final_df.columns if k not in by})
-            final_df.columns = ['_'.join(col).strip() for col in final_df.columns.values]
+            final_df.columns = ['_'.join([x for x in col if x is not ""]).strip() for col in final_df.columns.values]
 
         # except :
         #     print("Checkout https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_sql.html for an intro to group-by for people who speak sql.")
