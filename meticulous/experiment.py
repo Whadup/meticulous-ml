@@ -4,6 +4,7 @@ from git import Repo
 from typing import Dict
 
 from meticulous.utils import Tee, ExitHooks
+from meticulous.repo import REPO, COMMIT
 import atexit
 import traceback
 import logging
@@ -65,7 +66,7 @@ class Experiment(object):
         self._set_experiments_directory(experiments_directory)
 
         #Store metadata about the repo
-        commit = self.repo.commit()
+        commit = COMMIT
         self.metadata = {}
         """dict: Metadata stored to metadata.json"""
         self.metadata['githead-sha'] = commit.hexsha
@@ -249,7 +250,7 @@ class Experiment(object):
 
     def _set_repo_directory(self):
         """Finds a git repo by searching the project and its parent directories and sets self.repo_directory"""
-        self.repo = Repo(self.project_directory, search_parent_directories=True)
+        self.repo = REPO
         logger.debug("Found git repo at {repo}".format(repo=self.repo))
 
         # Absolute path of the repo
