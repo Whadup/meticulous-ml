@@ -174,7 +174,7 @@ The utility script ``meticulous`` also offers some advanced database operations 
 The operations supported are filtering, grouping, sorting and selecting columns, and they are applied in exactly this order.
 Note this convention on the column names: All arguments of the experiment are prefixed with ``args_`` whereas all results in the summary dictionary are prefixed with ``summary_``.
 
-Filtering allows you to specify a `pandas query <https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.query.html>`_ for experiments ussing the ``--filter`` argument. 
+Filtering allows you to specify a `pandas query <https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.query.html>`_ for experiments using the ``--filter`` argument. 
 
 We groups experiments based on a given comma-seperated list of columns using the ``--groupby`` argument. The remaining columns are aggregated: For real-valued columns, a mean and standard deviation are reported, which is particularly helpful for machine learning metrics like accuracy or loss. All other columns are aggregated by count.
 
