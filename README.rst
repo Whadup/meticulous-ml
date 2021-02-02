@@ -189,7 +189,7 @@ If we're only interested in a subset of all columns, we can specify a comma-sepe
         --columns summary_significance_mean,summary_significance_std \
         --sort summary_significance_mean \
         --export table.md
-                                      summary_significance_mean  summary_significance_std
+                                          summary_significance_mean  summary_significance_std
     args_k args_method args_n_estimators                                                                 
     32     KMeans      1                              19.5634                           0.6418           
     16     KMeans      1                              18.2383                           0.8171           
