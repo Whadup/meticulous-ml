@@ -1,0 +1,7 @@
+gitpython
+pandas
+tabulate
+
+[dev]
+sphinx
+libsass
