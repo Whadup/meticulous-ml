@@ -194,7 +194,7 @@ If we're only interested in a subset of all columns, we can specify a comma-sepe
     args_k args_method args_n_estimators                                                                 
     32     KMeans      1                              19.5634                           0.6418           
     16     KMeans      1                              18.2383                           0.8171           
-    8      KMeans      1                              15.1532                           0.6727¨
+    8      KMeans      1                              15.1532                           0.6727
 
 We can also export the summary in a number of different formats by specifying the ``--export {filename}`` argument. Depending on the ending of filename, we either export a pandas dataframe (``*.pd``), a csv table (``*.csv``), a json (``*.json``), a markdown table (``*.md``) or a LaTeX table (``*.tex``). 
 
