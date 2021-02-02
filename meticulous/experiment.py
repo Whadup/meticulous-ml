@@ -277,7 +277,7 @@ class Experiment(object):
         except FileNotFoundError as e:
             print("Creating local .gitignore")
             ignored = False
-        if not ignored:
+        if not ignored and not os.path.relpath(self.experiments_directory, self.repo_directory).startswith(".."):
             print("Adding experiments directory to .gitignore")
             with open(os.path.join(self.repo_directory, '.gitignore'), 'a') as f:
                 f.write(os.path.relpath(self.experiments_directory, self.repo_directory)+'\n')
@@ -305,6 +305,10 @@ class Experiment(object):
                                               self.hooks.exc_info['exc_value'],
                                               self.hooks.exc_info['exc_traceback'],
                                               file=f)
+                    traceback.print_exception(self.hooks.exc_info['exc_type'],
+                                              self.hooks.exc_info['exc_value'],
+                                              self.hooks.exc_info['exc_traceback'],
+                                              file=sys.stderr)
                 else:
                     f.write('SUCCESS')
         with self.open('STATUS', 'w') as f:
