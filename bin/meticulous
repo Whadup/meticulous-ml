@@ -16,6 +16,9 @@ def get_parser():
     parser.add_argument('--export', type=str, action="store", help='Export the results')
     parser.add_argument('--filter', type=str, action="store", help='Filter the results (Pandas Syntax)')
     parser.add_argument('--groupby', type=str, action="store", help='Group and Aggregate the results (Pandas Syntax)')
+    parser.add_argument('--sort', type=str, action="store", help='Sort using these columns')
+    parser.add_argument('--sort_reverse', action="store_true", help='Reverse sort order')
+
     parser.add_argument("--args", type=str, choices=['none', 'truncated', 'non-default', 'all'], default='all',
                         help='Display args; \n'
                              'none        - don\'t display args,\n'
@@ -67,12 +70,18 @@ if __name__ == '__main__':
         # try:
             by = [x.strip() for x in args.groupby.split(",")]
             final_df = final_df.groupby(by=by, dropna=False) \
-                        .agg({k : np.mean if np.issubdtype(final_df.dtypes[k], np.float) else np.size for k in final_df.columns if k not in by})
+                        .agg({k : [np.mean, np.std] if np.issubdtype(final_df.dtypes[k], np.float) else np.size for k in final_df.columns if k not in by})
+            final_df.columns = ['_'.join(col).strip() for col in final_df.columns.values]
+
         # except :
         #     print("Checkout https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_sql.html for an intro to group-by for people who speak sql.")
         #     print("We aggregate floats by average + std and count everything else. If you want different behavior, export a pandas dataframe with --export outfile.pd and then do it on your own")
     if args.columns:
         final_df = final_df[[x.strip() for x in args.columns.split(",")]]
+    if args.sort:
+        by = [x.strip() for x in args.sort.split(",")]
+        final_df = final_df.sort_values(by=by, ascending=args.sort_reverse)
+
     print(final_df)
     if args.export:
         if args.export.endswith(".pd"):
