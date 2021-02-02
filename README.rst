@@ -185,7 +185,7 @@ If we're only interested in a subset of all columns, we can specify a comma-sepe
 .. code:: shell
 
     $ meticulous /mnt/home/unsupervised_learning/results \
-        --filter args_xval_strategy==xval \
+        --filter "args_xval_strategy=='xval'" \
         --groupby args_k,args_method,args_n_estimators \
         --columns summary_significance_mean,summary_significance_std \
         --sort summary_significance_mean \
