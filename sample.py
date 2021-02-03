@@ -2,12 +2,12 @@
 # # Author: Olivier Grisel <olivier.grisel@ensta.org>
 # # License: BSD 3 clause
 
+import sys
 import numpy as np
 
 from sklearn.utils import shuffle
 from sklearn.cluster import MiniBatchKMeans
 from sklearn.cluster import KMeans
-
 from meticulous import Experiment
 
 # Number of run (with randomly generated dataset) for each strategy so as
@@ -54,6 +54,9 @@ for factory, init, params in cases:
                 km = factory(n_clusters=n_clusters, init=init,
                             n_init=n_init, **params).fit(X)
                 print(factory.__name__, init, km.inertia_)
+                if np.random.choice([True, False], p=[0.05, 0.95]):
+                    asfa
                 exp.summary(dict(inertia=km.inertia_))
+
 print("Experiments done. Checkout the results with \n" + \
       "> meticulous experiments/ --groupby 'args_init, args_estimator, args_n_init' --sort summary_inertia_mean --sort_reverse")

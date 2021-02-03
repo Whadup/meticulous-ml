@@ -37,11 +37,17 @@ class Tee(object):
         """
         self.file = fileobject
         self.stdstream = stdstream
+        self.stdout= stdstream is sys.stdout
+        self.stderr= stdstream is sys.stderr
         stdstream = self
 
     def close(self):
         """Close the file and set the stdstream back to the original stdstream"""
         stdstream = self.stdstream
+        if self.stdout:
+            sys.stdout = self.stdstream
+        if self.stderr:
+            sys.stderr = self.stdstream
         self.file.close()
 
     def __del__(self):

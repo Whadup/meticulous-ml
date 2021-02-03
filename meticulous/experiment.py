@@ -10,8 +10,6 @@ import traceback
 import logging
 logger = logging.getLogger('meticulous')
 
-#TODO: Implement close method for experiment
-#TODO: Implement context-manager for experiment
 #TODO: Implement git patch for dirty repo.
 #TODO: Write documentation and sample for multiple experiments
 
@@ -329,11 +327,23 @@ class Experiment(object):
         with self.open('STATUS', 'w') as f:
             f.write(status)
         atexit.unregister(self.atexit_hook)
+        self.stdout.close()
+        self.stderr.close()
     
     def __enter__(self):
         return self
-    def __exit__(self, type, value, traceback):
-        print(type, value, traceback)
+    def __exit__(self, type, value, tb):
+        if type is not None:
+            self.finish("ERROR\n" + "\n".join(
+                traceback.format_exception(type,
+                                        value,
+                                        tb)
+            ))
+            traceback.print_exception(type,
+                                        value,
+                                        tb,
+                                        file=sys.stderr)
+            return True
         self.finish()
 
 
