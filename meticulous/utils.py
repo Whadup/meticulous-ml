@@ -39,6 +39,8 @@ class Tee(object):
         self.stdstream = stdstream
         self.stdout= stdstream is sys.stdout
         self.stderr= stdstream is sys.stderr
+        if not self.stderr and not self.stdout:
+            sys.stderr.write("WARNING: It seems that you are nesting experiments. This is untested, but you do you!")
         stdstream = self
 
     def close(self):

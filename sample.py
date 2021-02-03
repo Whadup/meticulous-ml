@@ -55,7 +55,7 @@ for factory, init, params in cases:
                             n_init=n_init, **params).fit(X)
                 print(factory.__name__, init, km.inertia_)
                 if np.random.choice([True, False], p=[0.05, 0.95]):
-                    asfa
+                    superobviousbug
                 exp.summary(dict(inertia=km.inertia_))
 
 print("Experiments done. Checkout the results with \n" + \
