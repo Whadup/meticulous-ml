@@ -10,6 +10,11 @@ import traceback
 import logging
 logger = logging.getLogger('meticulous')
 
+#TODO: Implement close method for experiment
+#TODO: Implement context-manager for experiment
+#TODO: Implement git patch for dirty repo.
+#TODO: Write documentation and sample for multiple experiments
+
 ch = logging.StreamHandler()
 ch.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -137,8 +142,8 @@ class Experiment(object):
         self.stdout = Tee(sys.stdout, self.open('stdout', 'a'))
         sys.stdout = self.stdout
         self.stderr = Tee(sys.stderr, self.open('stderr', 'a'))
-        sys.stderr = self.stderr
 
+        sys.stderr = self.stderr
         self._set_status_file()
 
     @staticmethod
@@ -314,7 +319,21 @@ class Experiment(object):
                     f.write('SUCCESS')
         with self.open('STATUS', 'w') as f:
             f.write('RUNNING')
-        atexit.register(exit_hook)
+        self.atexit_hook = exit_hook
+        atexit.register(self.atexit_hook)
+
+    def finish(self, status="SUCCESS"):
+        self.metadata['end-time'] = datetime.datetime.now().isoformat()
+        with self.open('metadata.json', 'w') as f:
+            json.dump(self.metadata, f, indent=4)
+        with self.open('STATUS', 'w') as f:
+            f.write(status)
+        atexit.unregister(self.atexit_hook)
+    
+    def __enter__(self):
+        pass
+    def __exit__(self):
+        self.finish()
 
 
 class DirtyRepoException(Exception):
