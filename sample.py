@@ -50,13 +50,15 @@ for factory, init, params in cases:
     for run_id in range(n_runs):
         X, y = make_data(run_id, n_samples_per_center, grid_size, scale)
         for n_init in n_init_range:
-            with Experiment({"estimator": factory.__name__, "init": init, "n_init": int(n_init), **params}) as exp:
+            # with Experiment({"estimator": factory.__name__, "init": init, "n_init": int(n_init), **params}) as exp:
+                exp = Experiment({"estimator": factory.__name__, "init": init, "n_init": int(n_init), **params})
                 km = factory(n_clusters=n_clusters, init=init,
                             n_init=n_init, **params).fit(X)
                 print(factory.__name__, init, km.inertia_)
-                if np.random.choice([True, False], p=[0.05, 0.95]):
-                    superobviousbug
+                # if np.random.choice([True, False], p=[0.05, 0.95]):
+                #     superobviousbug
                 exp.summary(dict(inertia=km.inertia_))
+                exp.finish()
 
 print("Experiments done. Checkout the results with \n" + \
       "> meticulous experiments/ --groupby 'args_init, args_estimator, args_n_init' --sort summary_inertia_mean --sort_reverse")
