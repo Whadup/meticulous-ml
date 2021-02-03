@@ -1,4 +1,4 @@
 meticulous/tests/experiments
 experiments
 docsrc/_build/
-meticulous/__pycache__/
+__pycache__/
