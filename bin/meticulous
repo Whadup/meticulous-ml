@@ -70,7 +70,7 @@ if __name__ == '__main__':
         # try:
             by = [x.strip() for x in args.groupby.split(",")]
             final_df = final_df.groupby(by=by, dropna=False, group_keys=False, as_index=False) \
-                        .agg({k : [np.mean, np.std] if np.issubdtype(final_df.dtypes[k], np.float) else np.size for k in final_df.columns if k not in by})
+                        .agg({k : [np.mean, np.std] if np.issubdtype(final_df.dtypes[k], np.float64) else np.size for k in final_df.columns if k not in by})
             final_df.columns = ['_'.join([x for x in col if x != ""]).strip() for col in final_df.columns.values]
 
         # except :
