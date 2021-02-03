@@ -331,8 +331,8 @@ class Experiment(object):
         atexit.unregister(self.atexit_hook)
     
     def __enter__(self):
-        pass
-    def __exit__(self):
+        return self
+    def __exit__(self, type, value, traceback):
         self.finish()
 
 
