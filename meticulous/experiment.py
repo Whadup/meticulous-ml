@@ -333,6 +333,7 @@ class Experiment(object):
     def __enter__(self):
         return self
     def __exit__(self, type, value, traceback):
+        print(type, value, traceback)
         self.finish()
 
 
